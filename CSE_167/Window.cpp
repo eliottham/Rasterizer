@@ -16,7 +16,6 @@ bool flag = false;
 
 OBJObject bunny("./bunny.obj");
 OBJObject dragon("./dragon.obj");
-OBJObject bear("./bear.obj");
 
 void loadData() {
     vertices = dragon.getVertices();
@@ -98,14 +97,12 @@ void rasterize() {
 void Window::initialize_objects()
 {
 
-    bunny.translate(glm::vec3(10.0f, 0.0f, 0.0f));
-    dragon.translate(glm::vec3(-10.0f, -2.0f, 0.0f));
-    bear.translate(glm::vec3(0.0f, -2.0f, 0.0f));
+    bunny.translate(glm::vec3(2.0f, 0.0f, 0.0f));
+    dragon.translate(glm::vec3(-2.0f, -2.0f, 0.0f));
     
     bunny.scale(glm::vec3(2.0f));
     dragon.scale(glm::vec3(2.0f));
-    bear.scale(glm::vec3(0.5));
-
+    
     loadData();
 }
 
@@ -183,7 +180,6 @@ void Window::idle_callback()
 	// Perform any updates as necessary. Here, we will spin the cube slightly.
     bunny.update(glm::vec3(0.0f, 1.0f, 0.0f));
     dragon.update(glm::vec3(0.0f, 1.0f, 0.0f));
-    bear.update(glm::vec3(0.0f, 1.0f, 0.0f));
      
 }
 
@@ -203,17 +199,9 @@ void Window::display_callback(GLFWwindow* window)
         glDrawPixels(window_width, window_height, GL_RGB, GL_FLOAT, pixels);
     }
     else {
-        if(f1) {
             bunny.draw();
-        }
-        else if(f2) {
             dragon.draw();
-        }
-        else {
-            bear.draw();
-        }
     }
-
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
 	// Swap buffers
@@ -300,6 +288,10 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
                 bunny.resetPos(glm::vec3(2.0f, 0.0f, 0.0f));
                 dragon.resetPos(glm::vec3(-2.0f, -2.0f, 0.0f));
             }
+        }
+        // Toggle rasterizer
+        if(key == GLFW_KEY_M) {
+            flag ? flag = false : flag = true;
         }
 	}
 }
